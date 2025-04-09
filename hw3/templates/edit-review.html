@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        {% if review == None %}
+            <h1>New Review</h1>
+        {% else %}
+            <h1>{{review.title}}</h1>
+        {% endif %}
+
+        <form>
+            {% if review == None %}
+                <label for="movie_name">Movie name:</label><br>
+                <input type="text" id="movie_name" name="movie_name"><br>
+            {% endif %}
+            <label for="rating">Rating:</label><br>
+            <select id = "rating" name="rating">
+                <option value="1">&starf;</option>
+                <option value="2">&starf;&starf;</option>
+                <option value="3">&starf;&starf;&starf;</option>
+                <option value="4">&starf;&starf;&starf;&starf;</option>
+                <option value="5">&starf;&starf;&starf;&starf;&starf;</option>
+            </select><br>
+            <label for="review_text">Review:</label><br>
+            <textarea id="review_text" name="review_text" rows="4" cols="50"></textarea>
+        </form>
+
+        {% if review == None %}
+            <button onclick="document.location='/'">Back</button>
+        {% else %}
+            <button onclick="document.location='/'">Back</button>
+        {% endif %}
+        <button onclick="document.location='/'">Back</button>
+    {% endblock %}

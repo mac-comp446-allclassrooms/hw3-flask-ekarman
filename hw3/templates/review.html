@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        <h1>{{review.title}}</h1>
+        <p>
+            {% for i in range(review.rating) %}
+                &starf;
+            {% endfor %}
+        </p>
+        <p>{{review.text}}</p>
+        <button onclick="document.location='/'">Back</button>
+    {% endblock %}
