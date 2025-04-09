@@ -73,6 +73,8 @@ def setup():
         db.create_all()
         if not db_manager.get():  # If database is empty, add a sample entry
             db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 4)
+            db_manager.create("Man", "This is a pretty good movie", 3)
+            db_manager.create("Ma2n", "This is a pretty fsadf movie", 3)
             print("Database initialized with sample data!")
 
 # Reset the database
@@ -84,14 +86,37 @@ def reset_db():
         print("Database reset: success!")
     return "Database has been reset!", 200
 
-
 # ROUTES
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
 @app.route('/')
 def show_all_reviews():
     reviews = db_manager.get()
-    return render_template('index.html', reviews=reviews)
+    return render_template('index.html', title="Movie Reviews", reviews=reviews)
+
+@app.route('/new_review')
+def create_review():
+    return render_template('edit-review.html', title="New Review", review=None)
+
+@app.route('/review/<review_title>/view', methods=['GET']) # This post helped me with dynamic urls & 404 handling: https://stackoverflow.com/questions/35107885/how-to-generate-dynamic-urls-in-flask
+def show_review(review_title):
+    reviews = db_manager.get()
+    for review in reviews:
+        if (review.title == review_title):
+            return render_template('review.html', title=review, review=review)
+    return render_template('404.html'), 404
+
+@app.route('/review/<review_title>/edit', methods=['GET'])
+def edit_review(review_title):
+    reviews = db_manager.get()
+    for review in reviews:
+        if (review.title == review_title):
+            return render_template('edit-review.html', title=review, review=review)
+    return render_template('404.html'), 404
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
 
   
 # RUN THE FLASK APP

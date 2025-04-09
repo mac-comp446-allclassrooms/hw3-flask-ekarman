@@ -1,34 +1,32 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Reviews</title>
-    </head>
-    <body>
-        <div>
-            <h1>
-                All Reviews
-                <button id="new_review_button" type="button" onclick=""> + Add New Review</button>
-            </h1>
-        </div>
-        <div>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Rating</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                {% for review in reviews %} 
-                    <tr>
-                    <td>{{review.title}}</td>
-                    <td>
-                        {% for i in range(review.rating) %}
-                            &starf;
-                        {% endfor %}
-                    </td>
-                    </tr>
-                {% endfor %} 
-            </table>
-        </div>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+    {% block content %}
+    <h1>
+        All Reviews
+        <button id="new_review_button" type="button" onclick="document.location='/new_review'"> + Add New Review</button> 
+        <!-- I learned how to use buttons for redirecting purposes here: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_button_element -->
+    </h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Rating</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for review in reviews %}
+            <tr>
+            <td>
+                <a href="/review/{{review.title}}/view">{{review.title}}</a>
+            </td>
+            <td>
+                {% for i in range(review.rating) %}
+                    &starf;
+                {% endfor %}
+            </td>
+            <td>
+                <button class="edit_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'"> Edit</button> 
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
