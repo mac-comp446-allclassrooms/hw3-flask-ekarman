@@ -10,8 +10,8 @@
         <tr>
             <th>Title</th>
             <th>Rating</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <!-- <th>Edit</th>
+            <th>Delete</th> -->
         </tr>
         {% for review in reviews %}
             <tr>
@@ -24,7 +24,11 @@
                 {% endfor %}
             </td>
             <td>
-                <button class="edit_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'"> Edit</button> 
+                <button class="edit_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'">Edit</button> 
+            </td>
+            <td>
+                
+                <button class="delete_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'">Delete</button> 
             </td>
             </tr>
         {% endfor %}

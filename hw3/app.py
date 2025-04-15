@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -89,31 +89,48 @@ def reset_db():
 # ROUTES
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def show_all_reviews():
+    # if (request.method == 'POST'):
+    #     print("Post alert!")
+    #     db_manager.update(review.id, review.title, request.form['review_text'], request.form['rating'])
+    #     return redirect(url_for('show_all_reviews'))
+
     reviews = db_manager.get()
     return render_template('index.html', title="Movie Reviews", reviews=reviews)
 
 @app.route('/new_review')
 def create_review():
-    return render_template('edit-review.html', title="New Review", review=None)
+    return render_template('review-edit.html', title="New Review", review=None)
 
 @app.route('/review/<review_title>/view', methods=['GET']) # This post helped me with dynamic urls & 404 handling: https://stackoverflow.com/questions/35107885/how-to-generate-dynamic-urls-in-flask
 def show_review(review_title):
     reviews = db_manager.get()
     for review in reviews:
         if (review.title == review_title):
-            return render_template('review.html', title=review, review=review)
+            return render_template('review-view.html', title=review, review=review)
     return render_template('404.html'), 404
 
-@app.route('/review/<review_title>/edit', methods=['GET'])
+@app.route('/review/<review_title>/edit', methods=['GET', 'POST'])
 def edit_review(review_title):
+    review = None
     reviews = db_manager.get()
-    for review in reviews:
-        if (review.title == review_title):
-            return render_template('edit-review.html', title=review, review=review)
-    return render_template('404.html'), 404
-
+    for potential_review in reviews:
+        if (potential_review.title == review_title):
+            review = potential_review
+    
+    if (review == None):
+        return render_template('404.html'), 404
+        
+    if (request.method == 'POST'): # Used this website to figure out how to handle forms in Flask https://flask.palletsprojects.com/en/stable/tutorial/views/#the-first-view-register
+        print("Post alert!")
+        db_manager.update(review.id, review.title, request.form['review_text'], request.form['rating'])
+        return redirect(url_for('show_all_reviews'))
+    if (request.method == 'GET'):
+        print("Get alert!")
+    
+    return render_template('review-edit.html', title=review.title, review=review)
+    
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
