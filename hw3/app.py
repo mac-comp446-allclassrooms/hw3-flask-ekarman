@@ -93,7 +93,7 @@ def reset_db():
 def show_all_reviews():
     # if (request.method == 'POST'):
     #     print("Post alert!")
-    #     db_manager.update(review.id, review.title, request.form['review_text'], request.form['rating'])
+    #     db_manager.delete()
     #     return redirect(url_for('show_all_reviews'))
 
     reviews = db_manager.get()
