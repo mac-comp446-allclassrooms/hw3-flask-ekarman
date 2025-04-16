@@ -2,15 +2,15 @@
 
     {% block content %}
         {% if review == None %}
-            <h1>New Review</h1>
+            <h2>New Review</h2>
         {% else %}
-            <h1>{{review.title}}</h1>
+            <h2>{{review.title}}</h2>
         {% endif %}
 
         <form method="post">
             {% if review == None %}
-                <label for="movie_name">Movie name:</label><br>
-                <input type="text" id="movie_name" name="movie_name"><br>
+                <label for="movie_title">Movie name:</label><br>
+                <input type="text" id="movie_title" name="movie_title" required><br>
             {% endif %}
             <label for="rating">Rating:</label><br>
             <select id = "rating" name="rating">
@@ -24,10 +24,9 @@
             <textarea id="review_text" name="review_text" rows="4" cols="50">{{review.text}}</textarea><br>
 
             {% if review == None %}
-                <!-- <button onclick="document.location='/'">Create Review</button> -->
-                <input type="submit" value="Create Review" onclick="document.location='/'">
+                <input type="submit" value="Create Review">
             {% else %}
-                <input type="submit" value="Edit Review" onclick="document.location='/'">
+                <input type="submit" value="Edit Review">
             {% endif %}
         </form>
         <button onclick="document.location='/'">Back</button>

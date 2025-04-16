@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
     {% block content %}
-    <h1>
+    <h2>
         All Reviews
-        <button id="new_review_button" type="button" onclick="document.location='/new_review'"> + Add New Review</button> 
-        <!-- I learned how to use buttons for redirecting purposes here: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_button_element -->
-    </h1>
-    <table>
+    </h2>
+    <table id="reviews">
         <tr>
             <th>Title</th>
             <th>Rating</th>
+            <th></th>
+            <th></th>
         </tr>
         {% for review in reviews %}
             <tr>
@@ -25,9 +25,14 @@
                 <button class="edit_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'">Edit</button> 
             </td>
             <td>
-                <button class="delete_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'">Delete</button> 
+                <form method="post">
+                    <input type="hidden" name="review_id" value={{review.id}}>
+                    <input class="delete_review_button" type="submit" value="Delete">
+                </form>
             </td>
             </tr>
         {% endfor %}
     </table>
+    <button id="new_review_button" type="button" onclick="document.location='/new-review'"> + Add New Review</button> 
+    <!-- I learned how to use buttons for redirecting purposes here: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_button_element -->
     {% endblock %}
