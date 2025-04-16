@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+    <h2>
+        All Reviews
+    </h2>
+    <table id="reviews">
+        <tr>
+            <th>Title</th>
+            <th>Rating</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for review in reviews %}
+            <tr>
+            <td>
+                <a href="/review/{{review.title}}/view">{{review.title}}</a>
+            </td>
+            <td>
+                {% for i in range(review.rating) %}
+                    &starf;
+                {% endfor %}
+            </td>
+            <td>
+                <button class="edit_review_button" type="button" onclick="document.location='/review/{{review.title}}/edit'">Edit</button> 
+            </td>
+            <td>
+                <form method="post">
+                    <input type="hidden" name="review_id" value={{review.id}}>
+                    <input class="delete_review_button" type="submit" value="Delete">
+                </form>
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <button id="new_review_button" type="button" onclick="document.location='/new-review'"> + Add New Review</button> 
+    <!-- I learned how to use buttons for redirecting purposes here: https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_button_element -->
+    {% endblock %}

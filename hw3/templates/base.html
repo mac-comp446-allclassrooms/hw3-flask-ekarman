@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title }}</title>
+    {% block style %}{% endblock %}
+  </head>
+
+  <body>
+      <header>
+        <h1>Movie Reviews</h1>
+          <a href="/">All Reviews</a> |
+          <a href="/new-review">Add New Review</a> |
+          <a href="/about-us">About Us</a>
+      </header>
+
+    {% block content %}
+
+
+    {% endblock %}
+  </body>
+</html>
